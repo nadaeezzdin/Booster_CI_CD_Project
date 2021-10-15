@@ -20,18 +20,16 @@ pipeline {
                   docker push noon01/Booster_proj:v1.0 
                 """
                 }
+               post {
+             
+               success {
+                   slackSend (color: '#228B22', message: " PIPELINE SUCCEEDED.")
+                }
+              failure {
+                 slackSend (color: '#FF0000', message: "PIPELINE FAILED.")
+               }
+               }    
             }
         }
-          post {
-             
-        success
-        {
-            slackSend (color: '#228B22', message: " PIPELINE SUCCEEDED.")
-        }
-        failure
-        {
-            slackSend (color: '#FF0000', message: "PIPELINE FAILED.")
-        }
-     }    
-  }
+    }
 }
