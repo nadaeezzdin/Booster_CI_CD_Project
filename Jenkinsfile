@@ -22,8 +22,7 @@ pipeline {
                 }
             }
         }
-    }
-    post
+         post
     {
         success
         {
@@ -33,6 +32,7 @@ pipeline {
         {
             slackSend (color: '#FF0000', message: "PIPELINE FAILED.")
         }
+    }
     }
 }
 
