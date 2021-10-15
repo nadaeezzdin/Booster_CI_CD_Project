@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
 
  
     stages {
@@ -10,7 +10,7 @@ pipeline {
                 
                 }
            }
-            stage('docker build') {
+            stage('docker build and push') {
             steps {
                 // Get some code from a GitHub repository
                 withCredentials([usernamePassword(credentialsId:"dockerhub",usernameVariable:"USERNAME",passwordVariable:"PASSWORD")]){
@@ -21,7 +21,18 @@ pipeline {
                 """
                 }
             }
-        
+        }
+    }
+    post
+    {
+        success
+        {
+            slackSend (color: '#228B22', message: " PIPELINE SUCCEEDED.")
+        }
+        failure
+        {
+            slackSend (color: '#FF0000', message: "PIPELINE FAILED.")
         }
     }
 }
+
