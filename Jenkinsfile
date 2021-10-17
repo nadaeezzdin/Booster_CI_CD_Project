@@ -3,7 +3,7 @@ pipeline
     agent any
     stages
     {
-        stage('Prep')
+        stage('Preparation')
         {
             steps
             {
@@ -30,17 +30,24 @@ pipeline
                 }
             }
         }
+        stage('Deployment')
+        {
+            steps
+            {
+                sh 'docker run -d -p 8000:8000 noon01/Booster_proj:v1.0'
+            }
+        }
         
     }
     post
     {
         success
         {
-            slackSend (color: '00FF00', message: "THE DEPLOYMENT SUCCEEDED.")
+            slackSend (color: '00FF00', message: "Pipeline Succeeded")
         }
         failure
         {
-            slackSend (color: '#FF0000', message: "THE DEPLOYMENT FAILED.")
+            slackSend (color: '#FF0000', message: "Pipeline Failed")
         }
     }
 }
